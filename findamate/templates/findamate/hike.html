@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create a new Hike</h2>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form action="{% url 'findamate:hike' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Vote" />
+</form>
+{% endblock content %}
