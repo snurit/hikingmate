@@ -1,0 +1,30 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Hiking Mate">
+            <md-icon>filter_hdr</md-icon>
+        </md-button>  
+        <h2 flex md-truncate>Hiking Mate</h2>
+    </div>
+  </md-toolbar>
+
+    <md-fab-speed-dial ng-hide="demo.hidden" md-direction="down" md-open="demo.isOpen" class="md-scale md-fab-top-right" ng-class="{ 'md-hover-full': demo.hover }" ng-mouseenter="demo.isOpen=true" ng-mouseleave="demo.isOpen=false">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-warn">
+                <md-tooltip md-direction="top" md-visible="tooltipVisible">Menu</md-tooltip>
+                <md-icon aria-label="menu">menu</md-icon>
+            </md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+            <md-button aria-label="Login" class="md-fab md-raised md-mini" href="{% url 'findamate:login' %}">
+                <md-tooltip md-direction="left" md-visible="tooltipVisible" md-autohide="false">Login</md-tooltip>
+                <md-icon aria-label="login">account_circle</md-icon>
+            </md-button>
+        </md-fab-actions>
+        <md-fab-actions>
+                <md-button aria-label="Login" class="md-fab md-raised md-mini" href="{% url 'findamate:hike' %}">
+                    <md-tooltip md-direction="left" md-visible="tooltipVisible" md-autohide="false">Hike</md-tooltip>
+                    <md-icon aria-label="login">swap_calls</md-icon>
+                </md-button>
+            </md-fab-actions>
+    </md-fab-speed-dial>

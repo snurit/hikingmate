@@ -89,7 +89,12 @@ class Flare(Localisable):
 class Enrollment(models.Model):
     hike = models.ForeignKey(Hike, on_delete=models.CASCADE)
     hiker = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.CharField(blank=True, null=True, max_length=256)
+    hike_rating = models.PositiveSmallIntegerField(blank=True, null=True)
+    leader_rating = models.PositiveSmallIntegerField(blank=True, null=True)
     is_leader = models.BooleanField(default=False)
-    enrollment_date = models.DateField(auto_now_add=True)
+    invite_accepted = models.BooleanField(default=False)
+    invite_date = models.DateField(auto_now_add=True)
+    enrollment_date = models.DateField()
     def __str__(self):
-        return self.hike + ' - ' + self.hiker
+        return str(self.hike) + ' by ' + str(self.hiker)

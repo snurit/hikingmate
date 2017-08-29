@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create a new Path</h2>
+<div id="map" style="height:100%"></div>
+<script>
+  var map;
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 8
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB33F8AIzT5i3Ak17ei5O9bKardp6IhOxw&callback=initMap" async defer></script>
+{% endblock content %}
