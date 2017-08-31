@@ -11,7 +11,7 @@
     </table>
     <md-radio-group ng-model="data.group3">
         {% for choice in form.type %}
-            <md-radio-button ng-value="{{choice.1}}" aria-label="{{choice.choice_label}}">
+            <md-radio-button ng-value="{{choice.choice_label}}" aria-label="{{choice.choice_label}}">
                 <md-icon>menu</md-icon>
             </md-radio-button>
         {% endfor %}

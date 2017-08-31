@@ -4,11 +4,13 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import Group
+from rest_framework import viewsets
+from findamate.serializers import UserSerializer, GroupSerializer
 
 # Create your views here.
 from django.http import HttpResponse
-from findamate.models import Hike
-from findamate.models import Enrollment
+from findamate.models import Hike, Enrollment, User
 from findamate.forms import HikeForm, SignUpForm
 
 import logging
@@ -66,3 +68,19 @@ def signup(request):
 def logout(request):
     logout(request)
     return render(request, 'findamate/index.html')
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer

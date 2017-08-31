@@ -51,7 +51,7 @@ class Point(Localisable):
     comment = models.TextField(blank=True, null=True, max_length=1024)
     hike  = models.ForeignKey('Hike', on_delete=models.CASCADE)
     def __str__(self):
-        return self.point_type + ' (' + self.latitude +','+self.longitude+')'
+        return self.point_type + ' ' + self.hike.__str__()
 
 # Class Hike
 class Hike(models.Model):
@@ -95,6 +95,6 @@ class Enrollment(models.Model):
     is_leader = models.BooleanField(default=False)
     invite_accepted = models.BooleanField(default=False)
     invite_date = models.DateField(auto_now_add=True)
-    enrollment_date = models.DateField()
+    enrollment_date = models.DateField(blank=True, null=True)
     def __str__(self):
         return str(self.hike) + ' by ' + str(self.hiker)

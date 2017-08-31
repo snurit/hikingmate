@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +123,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'findamate.User'
 LOGIN_REDIRECT_URL = 'index'
+FIXTURE_DIRS = ('/findamate/fixtures/',)
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}
