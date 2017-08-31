@@ -5,13 +5,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import Group
-from rest_framework import viewsets
-from findamate.serializers import UserSerializer, GroupSerializer
 
-# Create your views here.
+# Common Views import
 from django.http import HttpResponse
-from findamate.models import Hike, Enrollment, User
+from findamate.models import Hike, Enrollment, User, Flare
 from findamate.forms import HikeForm, SignUpForm
+
+# API import
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from rest_framework import viewsets
+from findamate.serializers import UserSerializer, HikeSerializer, FlareSerializer
 
 import logging
 logger = logging.getLogger(__name__)
@@ -69,18 +75,56 @@ def logout(request):
     logout(request)
     return render(request, 'findamate/index.html')
 
+# API VIEWS
+
+@csrf_exempt
+def api_user(request):
+    if request.method == 'GET':
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = UserSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def api_user_detail(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = UserSerializer(user)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = UserSerializer(user, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        user.delete()
+        return HttpResponse(status=204)
+
+# API VIEWS SETS
 
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
+class HikeViewSet(viewsets.ModelViewSet):
+    queryset = Hike.objects.all().order_by('first_name')
+    serializer_class = HikeSerializer
 
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+class FlareViewSet(viewsets.ModelViewSet):
+    queryset = Flare.objects.all().order_by('date_start')
+    serializer_class = FlareSerializer

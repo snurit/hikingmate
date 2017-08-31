@@ -15,16 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from rest_framework import routers
 from findamate import views
+from rest_framework import routers
 
+# Base API URL
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+router.register(r'api/users', views.UserViewSet)
+router.register(r'api/hikes', views.HikeViewSet)
+router.register(r'api/flares', views.FlareViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^find-a-mate/', include('findamate.urls', namespace="findamate")),
     url(r'^', include(router.urls)),
+    url(r'^', include('findamate.urls')),
+    url(r'^find-a-mate/', include('findamate.urls', namespace="findamate")),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

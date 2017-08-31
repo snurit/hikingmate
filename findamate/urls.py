@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^hike/(?P<hike_id>[0-9]+)?/$', views.hike, name='hike'),
     url(r'^path/$', views.path, name='path'),
     url(r'^signup/$', views.signup, name='signup'),
+    url(r'^api/hiker/$', views.api_user),
+    url(r'^api/hiker/(?P<pk>[0-9]+)/$', views.api_user_detail),
 ]
