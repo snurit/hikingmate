@@ -10,4 +10,8 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^api/hiker/$', views.api_user),
     url(r'^api/hiker/(?P<pk>[0-9]+)/$', views.api_user_detail),
+    url(r'^api/hike/$', views.api_hike),
+    url(r'^api/hike/(?P<pk>[0-9]+)/$', views.api_hike_detail),
+    url(r'^api/enrollment/$', views.api_enrollment),
+    url(r'^api/enrollment/(?P<pk>[0-9]+)/$', views.api_enrollment_detail),
 ]

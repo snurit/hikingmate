@@ -1,5 +1,5 @@
 from django.contrib.auth.models import Group
-from findamate.models import User, Hike, Flare
+from findamate.models import User, Hike, Flare, Enrollment
 from rest_framework import serializers
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,4 +16,8 @@ class FlareSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Flare
         fields = ('longitude', 'latitude', 'date_start', 'date_end', 'radius', 'hiker')
-        
+
+class EnrollmentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Enrollment
+        fields = ('hike', 'hiker', 'hike_rating', 'leader_rating', 'invite_accepted', 'enrollment_date')
