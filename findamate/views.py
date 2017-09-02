@@ -125,7 +125,13 @@ def api_hike(request):
         data = JSONParser().parse(request)
         serializer = HikeSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
+            hike = serializer.save()
+            # Creating the base enrollment
+            enroll = Enrollment()
+            enroll.hike = hike.id
+            enroll.hiker = request.user
+            enroll.is_leader = True
+            enroll.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 
